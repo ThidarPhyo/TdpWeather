@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 import CoreLocation
+import NVActivityIndicatorView
+import Kingfisher
+
 
 class WeatherDataModel {
     
@@ -31,7 +34,8 @@ class WeatherDataModel {
 
 class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-   let locationManager = CLLocationManager()
+    var busyView: NVActivityIndicatorView?
+    let locationManager = CLLocationManager()
     
     var lists = [[String:Any]]()
     var citys = [String: Any]()
@@ -56,14 +60,36 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchDataAla()
-        showBusy()
+        
+        setup()
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startMonitoringSignificantLocationChanges()
         
     }
+    func setup() {
+        let busyFrame = CGRect(x: 30, y: 30, width: 100, height: 100)
+        busyView = NVActivityIndicatorView(frame: busyFrame)
+        busyView?.color = UIColor.red
+        busyView?.type = .ballScaleRippleMultiple
+        busyView?.center = view.center
+        print(busyView)
+    }
+    func showBusy() {
+        view.addSubview(busyView!)
+        
+        busyView?.startAnimating()
+    }
+    func hideBusy() {
+        
+        busyView?.stopAnimating()
+        busyView?.removeFromSuperview()
+    }
     func currentData() {
         
+        
+        //imageView.kf.indicatorType = .activity
+        //imageView.kf.setImage(with: url)
         var dt = 0.0, icon = "" ,temp = 0.0
         dt = self.lists[0]["dt"] as? Double ?? 0.0
         let milisecond = dt
@@ -76,6 +102,7 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
         let main = self.lists[0]["temp"] as? [String:Any]
         temp = main!["day"] as? Double ?? 0.0
         currentYgn.image = UIImage(named: icon ?? "")
+        //currentYgn.kf.setImage(with: currentYgn.image)
         let tempInt = Int((temp - 273.15).rounded())
         currentTemp.text = "\(tempInt) ℃"
         currentCity.text = citys["name"] as? String ?? ""
@@ -112,17 +139,20 @@ class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
 
         }
-        busyInt.startAnimating()
-        busyInt.isHidden = false
+//        busyInt.startAnimating()
+//        busyInt.isHidden = false
+        OperationQueue.main.addOperation {
+            self.showBusy()
+        }
     }
-    func hideBusy(){
-        busyInt.isHidden = true
-        busyInt.stopAnimating()
-    }
-    func showBusy() {
-        busyInt.isHidden = false
-        busyInt.startAnimating()
-    }
+//    func hideBusy(){
+//        busyInt.isHidden = true
+//        busyInt.stopAnimating()
+//    }
+//    func showBusy() {
+//        busyInt.isHidden = false
+//        busyInt.startAnimating()
+//    }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }

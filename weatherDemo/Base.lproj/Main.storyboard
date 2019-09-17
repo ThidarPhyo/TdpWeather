@@ -21,10 +21,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vC3-9K-pIw">
                                 <rect key="frame" x="0.0" y="256" width="414" height="606"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="8Vm-Cn-hYK">
-                                    <rect key="frame" x="0.0" y="125" width="414" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </activityIndicatorView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WeatherTableViewCell" rowHeight="97" id="NoJ-kV-r99" customClass="WeatherTableViewCell" customModule="weatherDemo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="97"/>
@@ -156,7 +152,6 @@
                         <viewLayoutGuide key="safeArea" id="qr6-yI-btx"/>
                     </view>
                     <connections>
-                        <outlet property="busyInt" destination="8Vm-Cn-hYK" id="Ajk-bZ-Ohg"/>
                         <outlet property="currentCity" destination="Cpf-aV-BTo" id="fRM-Uq-3d6"/>
                         <outlet property="currentDate" destination="ZmO-e9-e04" id="7sc-gI-4fy"/>
                         <outlet property="currentTemp" destination="ZAx-ai-Xf4" id="Lni-lH-6vQ"/>
